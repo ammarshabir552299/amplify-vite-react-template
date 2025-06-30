@@ -1,36 +1,46 @@
 // src/App.tsx
+
+import { Authenticator } from '@aws-amplify/ui-react';
+import { generateClient } from "aws-amplify/data";
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-import { Authenticator } from '@aws-amplify/ui-react';
 
 const client = generateClient<Schema>();
 
-function AppContent({ signOut }: { signOut: () => void }) {
+export default function App() {
+  return (
+    <Authenticator>
+      {({ signOut, user }) => <TodoApp signOut={signOut} />}
+    </Authenticator>
+  );
+}
+
+function TodoApp({ signOut }: { signOut: () => void }) {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
   useEffect(() => {
-    const subscription = client.models.Todo.observeQuery().subscribe({
+    const sub = client.models.Todo.observeQuery().subscribe({
       next: (data) => setTodos([...data.items]),
     });
-    return () => subscription.unsubscribe();
+
+    return () => sub.unsubscribe();
   }, []);
 
-  function createTodo() {
+  async function createTodo() {
     const content = window.prompt("Todo content");
     if (content) {
-      client.models.Todo.create({ content });
+      await client.models.Todo.create({ content });
     }
   }
 
-  function deleteTodo(id: string) {
-    client.models.Todo.delete({ id });
+  async function deleteTodo(id: string) {
+    await client.models.Todo.delete({ id });
   }
 
   return (
-    <main style={{ padding: "2rem" }}>
+    <main>
       <h1>My Todos</h1>
-      <button onClick={createTodo}>+ New Todo</button>
+      <button onClick={createTodo}>+ New</button>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id} onClick={() => deleteTodo(todo.id)}>
@@ -38,21 +48,15 @@ function AppContent({ signOut }: { signOut: () => void }) {
           </li>
         ))}
       </ul>
-      <p>🥳 App successfully hosted. Try creating a new todo!</p>
+      <div>
+        🥳 App hosted! Try creating a new todo.
+        <br />
+        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
+          Next tutorial step.
+        </a>
+      </div>
       <button onClick={signOut}>Sign out</button>
     </main>
   );
 }
-
-function App() {
-  return (
-    <Authenticator>
-      {({ signOut, user }) => (
-        <AppContent signOut={signOut} />
-      )}
-    </Authenticator>
-  );
-}
-
-export default App;
 
