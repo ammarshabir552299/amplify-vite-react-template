@@ -1,0 +1,53 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
+
+# Local env files
+.env
+.env.*.local
+
+# Amplify local & build artifacts
+amplify/#current-cloud-backend/
+amplify/.config/
+amplify/backend/amplify-meta.json
+amplify/team-provider-info.json
+amplify/#build/
+amplify/mock-data/
+
+# VS Code settings (except extensions.json for sharing)
+.vscode/*
+!.vscode/extensions.json
+
+# IDEs / OS files
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# AWS CDK context if used
+cdk.out/
+
+# Optional: Amplify outputs
+amplify_outputs.json
