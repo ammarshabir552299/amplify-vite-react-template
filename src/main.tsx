@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-import { Authenticator } from '@aws-amplify/ui-react';
+import { Authenticator } from '@aws-amplify/ui-react'; // ✅ You already import it
 import "./index.css";
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
