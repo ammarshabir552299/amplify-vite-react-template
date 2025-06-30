@@ -7,27 +7,37 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Production build
-dist/
-dist-ssr/
-*.local
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
 # Dependency directories
 node_modules/
 
-# Amplify backend config & build output (these are generated)
-amplify/# Amplify CLI local env files
-amplify/.config/local-env-info.json
-amplify/# Amplify CLI temp files
-amplify/# But KEEP amplify/team-provider-info.json (required)
-amplify/# KEEP amplify/backend/
-
-# AWS Amplify build artifacts
+# Build output
+dist/
+dist-ssr/
 build/
 
-# Editor directories and files
+# Local env files
+.env
+.env.*.local
+
+# Amplify local & build artifacts
+amplify/#current-cloud-backend/
+amplify/.config/
+amplify/backend/amplify-meta.json
+amplify/team-provider-info.json
+amplify/#build/
+amplify/mock-data/
+
+# VS Code settings (except extensions.json for sharing)
 .vscode/*
 !.vscode/extensions.json
+
+# IDEs / OS files
 .idea/
 .DS_Store
 *.suo
@@ -36,6 +46,8 @@ build/
 *.sln
 *.sw?
 
-# OS-specific
-Thumbs.db
-ehthumbs.db
+# AWS CDK context if used
+cdk.out/
+
+# Optional: Amplify outputs
+amplify_outputs.json
